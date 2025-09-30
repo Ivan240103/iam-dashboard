@@ -26,9 +26,13 @@
   "dependencies": {
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
+    "@types/node-fetch": "^2.6.13",
     "@vercel/otel": "^1.13.0",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
     "next": "^15",
     "next-auth": "^5.0.0-beta",
+    "node-fetch": "^3.3.2",
     "react": "^19",
     "react-dom": "^19",
     "sharp": "^0.34",
