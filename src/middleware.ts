@@ -10,7 +10,7 @@ import { settings } from "@/config";
 const { BASE_PATH } = settings;
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin|signout).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin|signout|mtls).*)"],
 };
 
 export default auth(async req => {
