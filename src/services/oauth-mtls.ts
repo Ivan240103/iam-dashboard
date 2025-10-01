@@ -6,12 +6,13 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { mtlsFetch } from "@/utils/fetch-mtls";
 
 const IAM_AUTHORITY_URL = process.env.IAM_AUTHORITY_URL as string;
 const IAM_CLIENT_ID = process.env.IAM_CLIENT_ID as string;
 const IAM_CLIENT_SECRET = process.env.IAM_CLIENT_SECRET as string;
 const IAM_SCOPES = process.env.IAM_SCOPES as string;
-const IAM_REDIRECT_URI = `${IAM_AUTHORITY_URL}/ui/api/mtls/callback`;
+const IAM_REDIRECT_URI = process.env.IAM_REDIRECT_URI as string;
 
 export async function decodeJwtPayload(token: string) {
   return JSON.parse(atob(token.split(".")[1]));
@@ -63,7 +64,7 @@ export async function retrieveToken(code: string) {
   formData.append("client_id", IAM_CLIENT_ID);
   formData.append("redirect_uri", IAM_REDIRECT_URI);
 
-  const response = await fetch(token_endpoint, {
+  const response = await mtlsFetch(token_endpoint, {
     method: "POST",
     body: formData.toString(),
     headers: {
@@ -71,7 +72,7 @@ export async function retrieveToken(code: string) {
       "content-type": "application/x-www-form-urlencoded",
     }
   });
-  const json = await response.json();
+  const json: any = await response.json();
   const cookiesStore = await cookies();
   cookiesStore.set("access_token", json["access_token"]);
 }

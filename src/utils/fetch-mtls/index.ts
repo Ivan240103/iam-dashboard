@@ -24,7 +24,13 @@ try {
   console.error("Failed to create mTLS agent:", error);
 }
 
-async function mtlsFetch(endpoint: string | URL, init?: RequestInit) {
+export async function mtlsFetch(endpoint: string | URL, init?: RequestInit) {
+  const options: RequestInit = init ?? {};
+  options.agent = agent;
+  return fetch(endpoint, options);
+}
+
+async function mtlsAuthFetch(endpoint: string | URL, init?: RequestInit) {
   const accessToken = await auth();
   if (!accessToken) {
     throw Error("Session not ready");
@@ -36,12 +42,11 @@ async function mtlsFetch(endpoint: string | URL, init?: RequestInit) {
     ...headers,
     authorization: `Bearer ${accessToken}`
   };
-  options.agent = agent;
-  return fetch(endpoint, options);
+  return mtlsFetch(endpoint, options);
 }
 
 export async function mtlsGetItem<T>(endpoint: string | URL): Promise<T> {
-  const response = await mtlsFetch(endpoint);
+  const response = await mtlsAuthFetch(endpoint);
   if (response.ok) {
     return response.json() as Promise<T>;
   } else {
