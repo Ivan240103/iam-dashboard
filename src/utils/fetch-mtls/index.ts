@@ -26,6 +26,11 @@ try {
 
 export async function mtlsFetch(endpoint: string | URL, init?: RequestInit) {
   const options: RequestInit = init ?? {};
+  let { headers } = options;
+  options.headers = {
+    ...headers,
+    "X-Client": "dashboard-mtls"
+  };
   options.agent = agent;
   return fetch(endpoint, options);
 }
