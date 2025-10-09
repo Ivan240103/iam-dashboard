@@ -55,13 +55,12 @@ export async function mtlsGetItem<T>(endpoint: string | URL): Promise<T> {
   if (response.ok) {
     return response.json() as Promise<T>;
   } else {
-    const error = await response.text();
     const status = response.status;
     if (status === 404) {
       notFound();
     } else {
       throw Error(
-        `mtlsGetItem from ${endpoint} failed with status ${status}: ${error}`
+        `mtlsGetItem from ${endpoint} failed with status ${status}`
       );
     }
   }

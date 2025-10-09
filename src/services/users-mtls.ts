@@ -20,5 +20,9 @@ export async function getUsersPageMtls(
   if (filter) {
     url += `&filter=${filter}`;
   }
-  return await mtlsGetItem<Paginated<User>>(url);
+  try {
+    return await mtlsGetItem<Paginated<User>>(url);
+  } catch (err) {
+    console.error(err)
+  }
 }
