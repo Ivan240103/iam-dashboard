@@ -60,7 +60,7 @@ export async function mtlsGetItem<T>(endpoint: string | URL): Promise<T> {
       notFound();
     } else {
       throw Error(
-        `mtlsGetItem from ${endpoint} failed with status ${status}`
+        `mtlsGetItem from ${endpoint} failed with status ${status}.`
       );
     }
   }
